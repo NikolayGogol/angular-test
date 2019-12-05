@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="search-field">
+    <input placeholder="search..." [(ngModel)]="searchModel" type="text" class="search-field" (input)="search()">
+  <ul *ngIf="res">
+    <li *ngFor="let item of res">{{ item.text }}</li>
+  </ul>
+  </div>
+  <textarea cols="30" rows="10" [(ngModel)]="msg"></textarea>
+  <button [disabled]="!msg" (click)="addComment()">add</button>
+  <ul class="comments">
+    <li *ngFor="let item of comments;let commentIndex = index">
+      <div class="comment-wrap">
+        <div class="comment">{{ item.text }}</div>
+        <span class="reply" (click)="reply(commentIndex)">Reply</span>
+        <span class="reply" (click)="removeComment(commentIndex)">Remove</span>
+      </div>
+      <div class="sub-comment-wrap" *ngIf="item.subCommentField">
+        <textarea cols="30" rows="10" [(ngModel)]="subComment"></textarea>
+        <button [disabled]="!subComment" (click)="addSubComment(commentIndex)">add sub comment</button>
+      </div>
+      <ul class="subComments" *ngIf="item.subComments">
+        <li *ngFor="let subComment of item.subComments;let subCommentIndex = index">
+          <div class="comment">{{subComment}}</div>
+          <p class="reply" (click)="removeSubComment(commentIndex,subCommentIndex)">Remove</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</div>
